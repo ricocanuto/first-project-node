@@ -9,11 +9,10 @@ const users = []
 
 const checkUserId = (response, request, next) => {
     const { id } = request.params
-
     const index = users.findIndex(user => user.id === id)
 
     if (index < 0) {
-        return response.status(404).json({message: "User not found"})
+        return response.status(404).json({ error: "User not found" })
     }
 
     request.userIndex = index
@@ -33,25 +32,35 @@ app.post('/users', (request, response) => {
 
     users.push(user)
 
-    return response.status(201).json(users)
+    return response.status(201).json(user)
 })
 
-app.put('/users/:id', checkUserId, (request, response) => {
+app.put('/users/:id', (request, response) => {
+    const { id } = request.params
     const { name, age } = request.body
-    const index = request.userIndex
-    const id = request.userId
 
     const updatedUser = { id, name, age }
+
+    const index = users.findIndex(user => user.id === id)
+
+    if (index, 0){
+        return response.status(404).json({ message: "User not found"})
+    }
 
     users[index] = updatedUser
 
     return response.json(updatedUser)
 })
 
-app.delete('/users/:id', checkUserId, (request, response) => {
-    const index = request.userIndex
+app.delete('/users/:id', (request, response) => {
+    const { id } = request.params
 
-    users.splice(index, 1)
+    const index = users.findIndex(user => user.id === id)
+
+    if(index < 0){
+        return response.status(204).json({ message: "User not found"})
+    }
+    users.splice(index,1)
 
     return response.status(204).json()
 })
