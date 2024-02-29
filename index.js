@@ -7,20 +7,6 @@ app.use(express.json())
 
 const users = []
 
-const checkUserId = (response, request, next) => {
-    const { id } = request.params
-    const index = users.findIndex(user => user.id === id)
-
-    if (index < 0) {
-        return response.status(404).json({ error: "User not found" })
-    }
-
-    request.userIndex = index
-    request.userId = id
-
-    next()
-}
-
 app.get('/users', (request, response) => {
     return response.json(users)
 })
@@ -43,7 +29,7 @@ app.put('/users/:id', (request, response) => {
 
     const index = users.findIndex(user => user.id === id)
 
-    if (index, 0){
+    if(index < 0){
         return response.status(404).json({ message: "User not found"})
     }
 
@@ -58,7 +44,7 @@ app.delete('/users/:id', (request, response) => {
     const index = users.findIndex(user => user.id === id)
 
     if(index < 0){
-        return response.status(204).json({ message: "User not found"})
+        return response.status(404).json({ message: "User not found"})
     }
     users.splice(index,1)
 
