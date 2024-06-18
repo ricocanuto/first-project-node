@@ -7,6 +7,8 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+const portDeploy = process.env.PORT || 3000;
+
 const users = []
 
 const checkUserId = (request, response, next) => {
