@@ -26,11 +26,11 @@ const checkUserId = (request, response, next) => {
     next()
 }
 
-app.get('/users', (request, response) => {
+app.get('/Users', (request, response) => {
     return response.json(users)
 })
 
-app.post('/users', (request, response) => {
+app.post('/Users', (request, response) => {
     const { name, age, email } = request.body
 
     const user = { id: uuid.v4(), name, age, email }
@@ -40,7 +40,7 @@ app.post('/users', (request, response) => {
     return response.status(201).json(user)
 })
 
-app.put('/users/:id', checkUserId, (request, response) => {
+app.put('/Users/:id', checkUserId, (request, response) => {
     
     const { name, age, email } = request.body
     const index = request.userIndex
@@ -53,7 +53,7 @@ app.put('/users/:id', checkUserId, (request, response) => {
     return response.json(updatedUser)
 })
 
-app.delete('/users/:id', checkUserId, (request, response) => {
+app.delete('/Users/:id', checkUserId, (request, response) => {
     const index = request.userIndex
 
     users.splice(index,1)
